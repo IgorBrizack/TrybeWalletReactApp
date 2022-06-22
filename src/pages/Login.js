@@ -1,23 +1,35 @@
 import React from 'react';
 import propTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { logInSucces } from '../actions';
 
-const PASSWORD_MINIMUN_LENGTH = 6;
+const PASSWORD_MINIMUN_LENGTH = 5;
 
 class Login extends React.Component {
   state = {
     isDisabled: true,
-    emailInput: '',
+    email: '',
     passwordInput: '',
   }
 
   doLogin = () => {
-    const { history } = this.props;
+    const { history, saveData } = this.props;
+    const { email } = this.state;
+    saveData({ email });
     history.push('/carteira');
   };
 
+  // validação de email com regex
+  // https://stackoverflow.com/questions/46155/how-can-i-validate-an-email-address-in-javascript
+  // com o email.include(.com) no if do checkInputFields darias certo, porém poderia ser qualquer email aleatório.
+  validateEmail = (email) => {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  }
+
   checkInputFileds = () => {
-    const { emailInput, passwordInput } = this.state;
-    if (emailInput.includes('@') && passwordInput.length > PASSWORD_MINIMUN_LENGTH) {
+    const { email, passwordInput } = this.state;
+    if (this.validateEmail(email) && passwordInput.length > PASSWORD_MINIMUN_LENGTH) {
       this.setState({ isDisabled: false });
     } else {
       this.setState({ isDisabled: true });
@@ -28,18 +40,19 @@ class Login extends React.Component {
     this.checkInputFileds)
 
   render() {
-    const { isDisabled } = this.state;
+    const { isDisabled, email } = this.state;
     return (
       <div>
         <form>
-          <label htmlFor="email-input">
+          <label htmlFor="email">
             Email:
             <input
+              value={ email }
               type="email"
               data-testid="email-input"
-              id="email-input"
+              id="email"
               onChange={ this.onInputChange }
-              name="emailInput"
+              name="email"
             />
           </label>
           <label htmlFor="password-input">
@@ -65,10 +78,15 @@ class Login extends React.Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  saveData: (state) => dispatch(logInSucces(state)),
+});
+
 Login.propTypes = {
   history: propTypes.shape({
     push: propTypes.func.isRequired,
   }).isRequired,
+  saveData: propTypes.func.isRequired,
 };
 
-export default Login;
+export default connect(null, mapDispatchToProps)(Login);
