@@ -21,7 +21,7 @@ class Login extends React.Component {
 
   // validação de email com regex
   // https://stackoverflow.com/questions/46155/how-can-i-validate-an-email-address-in-javascript
-  // com o email.include(.com) no if do checkInputFields darias certo, porém poderia ser qualquer email aleatório.
+  // com o email.includes('.com') no if do checkInputFields darias certo, porém poderia ser qualquer email aleatório. Com o regex, ele limita para que o @ e o . venham um na sequência do outro, caso isso não ocorra nossa função retorna falso.
   validateEmail = (email) => {
     const re = /\S+@\S+\.\S+/;
     return re.test(email);
