@@ -13,9 +13,9 @@ afterEach(() => jest.clearAllMocks());
 
 describe('4 - Implemente a lógica para armazenar no estado global as siglas das moedas que vêm da API', () => {
   test('Os valores da chave currencies no estado global devem ser puxados através de uma requisição à API', async () => {
-    const { store } = renderWithRouterAndStore(<Wallet />, '/carteira');
     const mockedExchange = jest.spyOn(global, 'fetch').mockImplementation(() => apiResponse);
-
+    const { store } = renderWithRouterAndStore(<Wallet />, '/carteira');
+    
     expect(mockedExchange).toBeCalled();
     expect(mockedExchange).toBeCalledWith('https://economia.awesomeapi.com.br/json/all');
 

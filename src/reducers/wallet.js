@@ -1,4 +1,5 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
+import { FETCH_DATA_COINS_SUCCESS, FETCH_DATA_COINS_ERROR } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [], // array de string
@@ -9,10 +10,15 @@ const INITIAL_STATE = {
 
 const walletReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case LOG_IN_SUCCES:
+  case FETCH_DATA_COINS_SUCCESS:
     return {
       ...state,
-      email: action.payload.email,
+      currencies: action.payload.coinsData,
+    };
+  case FETCH_DATA_COINS_ERROR:
+    return {
+      ...state,
+      error: action.payload,
     };
   default:
     return state;
