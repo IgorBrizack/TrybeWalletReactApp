@@ -5,10 +5,9 @@ import Header from './Header';
 import { fetchCoinsDataThunk } from '../actions';
 
 class Wallet extends React.Component {
-  async componentDidMount() {
-    const { dispatch, coinsData } = this.props;
+  componentDidMount() {
+    const { dispatch } = this.props;
     dispatch(fetchCoinsDataThunk());
-    console.log(coinsData);
   }
 
   render() {
@@ -16,7 +15,6 @@ class Wallet extends React.Component {
     return (
       <div>
         <Header />
-
         TrybeWallet
       </div>
     );
@@ -24,12 +22,12 @@ class Wallet extends React.Component {
 }
 
 const mapStateToProps = (globalState) => ({
-  coinsData: globalState.coinsData,
+  coinsData: globalState.wallet.currencies,
 });
 
 Wallet.propTypes = {
   dispatch: propTypes.func.isRequired,
-  coinsData: propTypes.string.isRequired,
+  // coinsData: propTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps)(Wallet);

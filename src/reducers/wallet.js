@@ -13,7 +13,7 @@ const walletReducer = (state = INITIAL_STATE, action) => {
   case FETCH_DATA_COINS_SUCCESS:
     return {
       ...state,
-      currencies: action.payload.coinsData,
+      currencies: action.payload.coinsName,
     };
   case FETCH_DATA_COINS_ERROR:
     return {

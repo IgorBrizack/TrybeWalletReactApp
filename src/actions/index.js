@@ -17,12 +17,12 @@ export function fetchCoinsDataSucces(coins) {
   return {
     type: FETCH_DATA_COINS_SUCCESS,
     payload: {
-      coinsName: coins.code,
+      coinsName: Object.keys(coins),
     },
   };
 }
 
-export function ffetchCoinsDataError(error) {
+export function fetchCoinsDataError(error) {
   return {
     type: FETCH_DATA_COINS_ERROR,
     payload: {
@@ -32,12 +32,11 @@ export function ffetchCoinsDataError(error) {
 }
 
 export const fetchCoinsDataThunk = () => async (dispatch) => {
-  fetch('https://economia.awesomeapi.com.br/json/all ')
+  fetch('https://economia.awesomeapi.com.br/json/all')
     .then((response) => response.json())
     .then((response) => {
-      const coins = response;
-      console.log(coins);
-      dispatch(fetchCoinsDataSucces(coins));
+      delete response.USDT; // deleta somente a chave USDT
+      dispatch(fetchCoinsDataSucces(response));
     })
     .catch((error) => {
       dispatch(fetchCoinsDataError(error));
