@@ -3,7 +3,7 @@ import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from './Header';
 import { fetchCoinsDataThunk, fetchCoinValueThunk } from '../actions';
-import ExpenseTable from './ExpensesTable';
+import ExpensesTable from './ExpensesTable';
 
 class Wallet extends React.Component {
   state = {
@@ -111,7 +111,7 @@ class Wallet extends React.Component {
 
           </button>
         </form>
-        <ExpenseTable />
+        <ExpensesTable />
       </div>
     );
   }
