@@ -1,11 +1,14 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-import { FETCH_DATA_COINS_SUCCESS, FETCH_DATA_COINS_ERROR } from '../actions';
+import { FETCH_DATA_COINS_SUCCESS,
+  FETCH_DATA_COINS_ERROR,
+  FETCH_VALUE_COINS_SUCCESS, TOTAL_EXPENCES_DONE } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [], // array de string
   expenses: [], // array de objetos, com cada objeto tendo as chaves id, value, currency, method, tag, description e exchangeRates
   editor: false, // valor booleano que indica de uma despesa está sendo editada
   idToEdit: 0, // valor numérico que armazena o id da despesa que esta sendo editada
+  totalExpense: 0,
 };
 
 const walletReducer = (state = INITIAL_STATE, action) => {
@@ -19,6 +22,16 @@ const walletReducer = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       error: action.payload,
+    };
+  case FETCH_VALUE_COINS_SUCCESS:
+    return {
+      ...state,
+      expenses: [...state.expenses, action.payload.expenses],
+    };
+  case TOTAL_EXPENCES_DONE:
+    return {
+      ...state,
+      totalExpense: action.payload.totalExpense,
     };
   default:
     return state;
