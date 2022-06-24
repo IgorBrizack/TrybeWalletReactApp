@@ -3,7 +3,12 @@ import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 class Header extends React.Component {
+  state = {
+    total: 0,
+  }
+
   render() {
+    const { total } = this.state;
     const { email, totalExpense } = this.props;
     return (
       <div>
@@ -11,7 +16,9 @@ class Header extends React.Component {
           {' '}
           { email }
         </h1>
-        <p data-testid="total-field">{totalExpense}</p>
+        {totalExpense ? <p data-testid="total-field">{totalExpense}</p> : (
+          <p data-testid="total-field">{total}</p>
+        )}
         <p data-testid="header-currency-field">BRL</p>
       </div>
     );
