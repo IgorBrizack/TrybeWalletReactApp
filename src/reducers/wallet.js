@@ -1,7 +1,10 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 import { FETCH_DATA_COINS_SUCCESS,
   FETCH_DATA_COINS_ERROR,
-  FETCH_VALUE_COINS_SUCCESS, TOTAL_EXPENCES_DONE } from '../actions';
+  FETCH_VALUE_COINS_SUCCESS,
+  TOTAL_EXPENSES_DONE,
+  EXCLUDED_ITEM_DONE,
+} from '../actions';
 
 const INITIAL_STATE = {
   currencies: [], // array de string
@@ -28,9 +31,15 @@ const walletReducer = (state = INITIAL_STATE, action) => {
       ...state,
       expenses: [...state.expenses, action.payload.expenses],
     };
-  case TOTAL_EXPENCES_DONE:
+  case TOTAL_EXPENSES_DONE:
     return {
       ...state,
+      totalExpense: action.payload.totalExpense,
+    };
+  case EXCLUDED_ITEM_DONE:
+    return {
+      ...state,
+      expenses: [...action.payload.expenses],
       totalExpense: action.payload.totalExpense,
     };
   default:

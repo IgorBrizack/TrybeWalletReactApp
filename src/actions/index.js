@@ -4,13 +4,24 @@ export const LOG_IN_SUCCES = 'LOG_IN_SUCCES';
 export const FETCH_DATA_COINS_SUCCESS = 'FETCH_DATA_COINS_SUCCESS';
 export const FETCH_DATA_COINS_ERROR = 'FETCH_DATA_COINS_ERROR';
 export const FETCH_VALUE_COINS_SUCCESS = 'FETCH_VALUE_COINS_SUCCES';
-export const TOTAL_EXPENCES_DONE = 'TOTAL_EXPENCES_DONE';
+export const TOTAL_EXPENSES_DONE = 'TOTAL_EXPENSES_DONE';
+export const EXCLUDED_ITEM_DONE = 'EXCLUDED_ITEM_DONE';
 
 export function logInSucces(userData) {
   return {
     type: LOG_IN_SUCCES,
     payload: {
       email: userData.email,
+    },
+  };
+}
+
+export function excludedSucces(newExpenses, newTotalExpense) {
+  return {
+    type: EXCLUDED_ITEM_DONE,
+    payload: {
+      expenses: newExpenses,
+      totalExpense: newTotalExpense,
     },
   };
 }
@@ -56,14 +67,14 @@ export function fetchValueCoinSucces(coins) {
 
 export function totalExpense(total) {
   return {
-    type: TOTAL_EXPENCES_DONE,
+    type: TOTAL_EXPENSES_DONE,
     payload: {
       totalExpense: total,
     },
   };
 }
 
-const TOTAL = [];
+let TOTAL = [];
 
 export const fetchCoinValueThunk = (state, id) => async (dispatch) => {
   fetch('https://economia.awesomeapi.com.br/json/all')
@@ -79,13 +90,29 @@ export const fetchCoinValueThunk = (state, id) => async (dispatch) => {
         id,
         exchangeRates: response,
       };
-      dispatch(fetchValueCoinSucces(expensesData));
       const values = state.valueInput * response[state.coins].ask;
       TOTAL.push(values);
       const reduceTotal = TOTAL.reduce((acc, element) => acc + element, 0);
       dispatch(totalExpense(reduceTotal.toFixed(2)));
+      dispatch(fetchValueCoinSucces(expensesData));
     })
     .catch((error) => {
       dispatch(fetchCoinsDataError(error));
     });
+};
+
+export const excludeSelected = (e, expensesData) => (dispatch) => {
+  // const { expensesData, dispatch } = this.props;
+  TOTAL = [];
+  const newExpense = expensesData.filter((element) => element.id !== e);
+  const newExpenseWithNewId = newExpense.reduce((acc, element) => {
+    const values = Number(element.value)
+    * Number(element.exchangeRates[element.currency].ask);
+    TOTAL.push(values);
+    // element.id = index;
+    acc.push(element);
+    return acc;
+  }, []);
+  const reduceTotal = TOTAL.reduce((acc, element) => acc + element, 0);
+  dispatch(excludedSucces(newExpenseWithNewId, reduceTotal.toFixed(2)));
 };
