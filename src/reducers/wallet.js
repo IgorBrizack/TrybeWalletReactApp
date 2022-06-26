@@ -6,6 +6,7 @@ import { FETCH_DATA_COINS_SUCCESS,
   EXCLUDED_ITEM_DONE,
   EDIT_ITEM_TRUE,
   EDIT_ITEM_FALSE,
+  NEW_EXPENSE_DATA_AFTER_EDIT,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -55,6 +56,12 @@ const walletReducer = (state = INITIAL_STATE, action) => {
       ...state,
       editor: action.payload.editorFalse,
       idToEdit: action.payload.itemId,
+    };
+  case NEW_EXPENSE_DATA_AFTER_EDIT:
+    return {
+      ...state,
+      expenses: action.payload.expenses,
+      editor: action.payload.editorFalse,
     };
   default:
     return state;

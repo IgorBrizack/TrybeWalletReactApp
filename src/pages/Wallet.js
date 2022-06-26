@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 import Header from './Header';
 import { fetchCoinsDataThunk,
   fetchCoinValueThunk,
-  editItemFalse,
-  excludeSelected,
+  // editItemFalse,
   itemChanged } from '../actions';
 import ExpensesTable from './ExpensesTable';
 
@@ -28,8 +27,8 @@ class Wallet extends React.Component {
   saveNewChanges = () => {
     const { id, expensesData, dispatch } = this.props;
     const { valueInput, coins, descriptionInput, method, tag } = this.state;
-    let itemSelectedToEdit = expensesData.filter((element) => element.id === id);
-    itemSelectedToEdit = {
+    const itemSelectedToEdit = expensesData.filter((element) => element.id === id);
+    const newItemData = {
       id,
       value: valueInput,
       description: descriptionInput,
@@ -38,9 +37,10 @@ class Wallet extends React.Component {
       tag,
       exchangeRates: itemSelectedToEdit[0].exchangeRates,
     };
-    dispatch(excludeSelected(id, expensesData));
-    dispatch(itemChanged(itemSelectedToEdit));
-    dispatch(editItemFalse());
+    const newExpenseData = expensesData.filter((element) => element.id !== id);
+    newExpenseData.push(newItemData);
+    newExpenseData.sort((a, b) => a.id - b.id);
+    dispatch(itemChanged(newExpenseData));
     this.setState({ valueInput: 0,
       descriptionInput: '',
       method: 'Dinheiro',

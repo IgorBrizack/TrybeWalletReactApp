@@ -32,7 +32,7 @@ class ExpensesTable extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {expensesData && expensesData.map((element) => (
+            {expensesData.length > 0 && expensesData.map((element) => (
               <tr key={ element.id }>
                 <td>{element.description}</td>
                 <td>{element.tag}</td>

@@ -8,6 +8,7 @@ export const TOTAL_EXPENSES_DONE = 'TOTAL_EXPENSES_DONE';
 export const EXCLUDED_ITEM_DONE = 'EXCLUDED_ITEM_DONE';
 export const EDIT_ITEM_TRUE = 'EDIT_ITEM_TRUE';
 export const EDIT_ITEM_FALSE = 'EDIT_ITEM_FALSE';
+export const NEW_EXPENSE_DATA_AFTER_EDIT = 'NEW_EXPENSE_DATA_AFTER_EDIT';
 
 export function logInSucces(userData) {
   return {
@@ -139,10 +140,27 @@ export const excludeSelected = (e, expensesData) => (dispatch) => {
   dispatch(excludedSucces(newExpenseWithNewId, reduceTotal.toFixed(2)));
 };
 
-export const itemChanged = (item) => async (dispatch) => {
-  const values = Number(item.value) * Number(item.exchangeRates[item.currency].ask);
-  TOTAL.push(values);
+export function newExpenseAfterEdit(newExpenses) {
+  return {
+    type: NEW_EXPENSE_DATA_AFTER_EDIT,
+    payload: {
+      expenses: newExpenses,
+      editorFalse: false,
+    },
+  };
+}
+
+export const itemChanged = (newExpenseData) => (dispatch) => {
+  TOTAL = [];
+  // const values = Number(item.value) * Number(item.exchangeRates[item.currency].ask);
+  const NEW_TOTAL = newExpenseData.reduce((acc, element) => {
+    const values = Number(element.value)
+    * Number(element.exchangeRates[element.currency].ask);
+    return acc + values;
+  }, 0);
+
+  TOTAL = [NEW_TOTAL];
   const reduceTotal = TOTAL.reduce((acc, element) => acc + element, 0);
   dispatch(totalExpense(reduceTotal.toFixed(2)));
-  dispatch(fetchValueCoinSucces(item));
+  dispatch(newExpenseAfterEdit(newExpenseData));
 };
