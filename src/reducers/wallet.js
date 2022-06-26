@@ -4,6 +4,8 @@ import { FETCH_DATA_COINS_SUCCESS,
   FETCH_VALUE_COINS_SUCCESS,
   TOTAL_EXPENSES_DONE,
   EXCLUDED_ITEM_DONE,
+  EDIT_ITEM_TRUE,
+  EDIT_ITEM_FALSE,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -41,6 +43,18 @@ const walletReducer = (state = INITIAL_STATE, action) => {
       ...state,
       expenses: [...action.payload.expenses],
       totalExpense: action.payload.totalExpense,
+    };
+  case EDIT_ITEM_TRUE:
+    return {
+      ...state,
+      editor: action.payload.editorTrue,
+      idToEdit: action.payload.itemId,
+    };
+  case EDIT_ITEM_FALSE:
+    return {
+      ...state,
+      editor: action.payload.editorFalse,
+      idToEdit: action.payload.itemId,
     };
   default:
     return state;

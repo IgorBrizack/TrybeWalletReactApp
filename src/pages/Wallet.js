@@ -28,7 +28,7 @@ class Wallet extends React.Component {
   onInputChange = ({ target }) => this.setState({ [target.name]: target.value });
 
   render() {
-    const { coinsData } = this.props;
+    const { coinsData, editor } = this.props;
     const { method, tag, valueInput, descriptionInput, coins } = this.state;
     return (
       <div>
@@ -103,13 +103,20 @@ class Wallet extends React.Component {
               <option value="Saúde">Saúde</option>
             </select>
           </label>
-          <button
-            type="button"
-            onClick={ this.saveExpenses }
-          >
-            Adicionar despesa
-
-          </button>
+          {editor ? (
+            <button
+              type="button"
+              onClick={ this.saveNewChanges }
+            >
+              Editar despesa
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={ this.saveExpenses }
+            >
+              Adicionar despesa
+            </button>)}
         </form>
         <ExpensesTable />
       </div>
@@ -120,12 +127,14 @@ class Wallet extends React.Component {
 const mapStateToProps = (globalState) => ({
   coinsData: globalState.wallet.currencies,
   expensesData: globalState.wallet.expenses,
+  editor: globalState.wallet.editor,
 });
 
 Wallet.propTypes = {
   dispatch: propTypes.func.isRequired,
   coinsData: propTypes.string.isRequired,
   expensesData: propTypes.string.isRequired,
+  editor: propTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps)(Wallet);

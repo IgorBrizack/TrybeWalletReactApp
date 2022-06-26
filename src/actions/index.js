@@ -6,12 +6,34 @@ export const FETCH_DATA_COINS_ERROR = 'FETCH_DATA_COINS_ERROR';
 export const FETCH_VALUE_COINS_SUCCESS = 'FETCH_VALUE_COINS_SUCCES';
 export const TOTAL_EXPENSES_DONE = 'TOTAL_EXPENSES_DONE';
 export const EXCLUDED_ITEM_DONE = 'EXCLUDED_ITEM_DONE';
+export const EDIT_ITEM_TRUE = 'EDIT_ITEM_TRUE';
+export const EDIT_ITEM_FALSE = 'EDIT_ITEM_FALSE';
 
 export function logInSucces(userData) {
   return {
     type: LOG_IN_SUCCES,
     payload: {
       email: userData.email,
+    },
+  };
+}
+
+export function editItemTrue(id) {
+  return {
+    type: EDIT_ITEM_TRUE,
+    payload: {
+      editorTrue: true,
+      itemId: id,
+    },
+  };
+}
+
+export function editItemFalse() {
+  return {
+    type: EDIT_ITEM_FALSE,
+    payload: {
+      editorFalse: false,
+      itemId: 0,
     },
   };
 }
