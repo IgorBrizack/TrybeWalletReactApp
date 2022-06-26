@@ -2,8 +2,14 @@ import React from 'react';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from './Header';
-import { fetchCoinsDataThunk, fetchCoinValueThunk } from '../actions';
+import { fetchCoinsDataThunk,
+  fetchCoinValueThunk,
+  editItemFalse,
+  excludeSelected,
+  itemChanged } from '../actions';
 import ExpensesTable from './ExpensesTable';
+
+const ALIMENTACAO_INITIAL_STATE = 'Alimentação';
 
 class Wallet extends React.Component {
   state = {
@@ -19,10 +25,37 @@ class Wallet extends React.Component {
     dispatch(fetchCoinsDataThunk());
   }
 
+  saveNewChanges = () => {
+    const { id, expensesData, dispatch } = this.props;
+    const { valueInput, coins, descriptionInput, method, tag } = this.state;
+    let itemSelectedToEdit = expensesData.filter((element) => element.id === id);
+    itemSelectedToEdit = {
+      id,
+      value: valueInput,
+      description: descriptionInput,
+      currency: coins,
+      method,
+      tag,
+      exchangeRates: itemSelectedToEdit[0].exchangeRates,
+    };
+    dispatch(excludeSelected(id, expensesData));
+    dispatch(itemChanged(itemSelectedToEdit));
+    dispatch(editItemFalse());
+    this.setState({ valueInput: 0,
+      descriptionInput: '',
+      method: 'Dinheiro',
+      tag: ALIMENTACAO_INITIAL_STATE,
+      coins: 'USD' });
+  }
+
  saveExpenses = async () => {
    const { dispatch, expensesData } = this.props;
    dispatch(fetchCoinValueThunk(this.state, expensesData.length));
-   this.setState({ valueInput: 0 });
+   this.setState({ valueInput: 0,
+     descriptionInput: '',
+     method: 'Dinheiro',
+     tag: ALIMENTACAO_INITIAL_STATE,
+     coins: 'USD' });
  };
 
   onInputChange = ({ target }) => this.setState({ [target.name]: target.value });
@@ -128,6 +161,7 @@ const mapStateToProps = (globalState) => ({
   coinsData: globalState.wallet.currencies,
   expensesData: globalState.wallet.expenses,
   editor: globalState.wallet.editor,
+  id: globalState.wallet.idToEdit,
 });
 
 Wallet.propTypes = {
@@ -135,6 +169,7 @@ Wallet.propTypes = {
   coinsData: propTypes.string.isRequired,
   expensesData: propTypes.string.isRequired,
   editor: propTypes.bool.isRequired,
+  id: propTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps)(Wallet);

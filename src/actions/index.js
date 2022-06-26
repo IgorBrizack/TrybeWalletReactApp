@@ -138,3 +138,11 @@ export const excludeSelected = (e, expensesData) => (dispatch) => {
   const reduceTotal = TOTAL.reduce((acc, element) => acc + element, 0);
   dispatch(excludedSucces(newExpenseWithNewId, reduceTotal.toFixed(2)));
 };
+
+export const itemChanged = (item) => async (dispatch) => {
+  const values = Number(item.value) * Number(item.exchangeRates[item.currency].ask);
+  TOTAL.push(values);
+  const reduceTotal = TOTAL.reduce((acc, element) => acc + element, 0);
+  dispatch(totalExpense(reduceTotal.toFixed(2)));
+  dispatch(fetchValueCoinSucces(item));
+};
