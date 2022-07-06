@@ -2,6 +2,7 @@ import React from 'react';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logInSucces } from '../actions';
+import wallet from '../imagens/wallet.png';
 
 const PASSWORD_MINIMUN_LENGTH = 5;
 
@@ -44,28 +45,40 @@ class Login extends React.Component {
     return (
       <div>
         <form>
+          <div>
+            <img className="wallet-img" src={ wallet } alt="wallet " />
+          </div>
           <label htmlFor="email">
-            Email:
-            <input
-              value={ email }
-              type="email"
-              data-testid="email-input"
-              id="email"
-              onChange={ this.onInputChange }
-              name="email"
-            />
+            <div className="input-group mb-3">
+              <span className="input-group-text" id="basic-addon1">@</span>
+              <input
+                className="form-control"
+                placeholder="Email:"
+                value={ email }
+                type="email"
+                data-testid="email-input"
+                id="email"
+                onChange={ this.onInputChange }
+                name="email"
+              />
+            </div>
           </label>
           <label htmlFor="password-input">
-            Password:
-            <input
-              type="text"
-              data-testid="password-input"
-              id="password-input"
-              onChange={ this.onInputChange }
-              name="passwordInput"
-            />
+            <div className="input-group mb-3">
+              <span className="input-group-text" id="basic-addon1">*</span>
+              <input
+                className="form-control"
+                placeholder="Senha:"
+                type="password"
+                data-testid="password-input"
+                id="password-input"
+                onChange={ this.onInputChange }
+                name="passwordInput"
+              />
+            </div>
           </label>
           <button
+            className="btn btn-success"
             disabled={ isDisabled }
             type="button"
             onClick={ this.doLogin }

@@ -1,10 +1,9 @@
 import React from 'react';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Header from './Header';
+import Header from '../components/Header';
 import { fetchCoinsDataThunk,
   fetchCoinValueThunk,
-  // editItemFalse,
   itemChanged } from '../actions';
 import ExpensesTable from './ExpensesTable';
 
