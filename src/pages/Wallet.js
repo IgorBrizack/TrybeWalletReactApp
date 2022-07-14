@@ -13,9 +13,9 @@ class Wallet extends React.Component {
   state = {
     valueInput: '',
     descriptionInput: '',
-    method: '',
-    tag: '',
-    coins: '',
+    method: 'Dinheiro',
+    tag: ALIMENTACAO_INITIAL_STATE,
+    coins: 'USD',
   }
 
   componentDidMount() {

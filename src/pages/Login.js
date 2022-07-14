@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-max-depth */
 import React from 'react';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -43,8 +44,8 @@ class Login extends React.Component {
   render() {
     const { isDisabled, email } = this.state;
     return (
-      <div>
-        <form>
+      <div className="login-container">
+        <form className="login-form">
           <div>
             <img className="wallet-img" src={ wallet } alt="wallet " />
           </div>

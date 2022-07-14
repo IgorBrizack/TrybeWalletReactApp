@@ -4,15 +4,35 @@
   box-sizing: border-box;
 }
 
-form {
-  border: 1px solid black;
+#root {
+  margin-top: -10px;
+  height: 700px;
+  background-color: antiquewhite;
+}
+
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.login-form{
+  background-color: rgb(233, 211, 183);
+  height: 300px;
+  border-radius: 5%;
+  border: 1px solid rgb(182, 169, 169);
   display: flex;
   flex-direction: column;
   padding: 20px;
   width: 300px;
+  align-items: center;
 }
 
 .wallet-img {
+  margin-bottom: 10px;
   max-width: 100px;
   max-height: 80px;
-}
+} 
+
