@@ -36,3 +36,23 @@
   max-height: 80px;
 } 
 
+.header-container {
+  margin-top: 10px;
+  display: flex;
+  border: 1px solid black;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-container h1 {
+  margin-left: 10px;
+  font-size: 20px;
+}
+
+.expenses-container {
+  width: 100px;
+  border: 1px solid black;
+  display: flex;
+  align-items: center;  
+  height: 100%;
+}

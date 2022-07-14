@@ -60,11 +60,11 @@ class Wallet extends React.Component {
   onInputChange = ({ target }) => this.setState({ [target.name]: target.value });
 
   render() {
-    const { coinsData, editor } = this.props;
+    const { coinsData, editor, history } = this.props;
     const { method, tag, valueInput, descriptionInput, coins } = this.state;
     return (
       <div>
-        <Header />
+        <Header history={ history } />
         <form>
           <label htmlFor="valueInput">
             Despesa:
@@ -169,6 +169,9 @@ Wallet.propTypes = {
   expensesData: propTypes.string.isRequired,
   editor: propTypes.bool.isRequired,
   id: propTypes.number.isRequired,
+  history: propTypes.shape({
+    push: propTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default connect(mapStateToProps)(Wallet);

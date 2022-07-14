@@ -14,10 +14,15 @@ class Login extends React.Component {
     passwordInput: '',
   }
 
+  componentDidMount() {
+    localStorage.setItem('loginWallet', '');
+  }
+
   doLogin = () => {
     const { history, saveData } = this.props;
     const { email } = this.state;
     saveData({ email });
+    localStorage.setItem('loginWallet', email);
     history.push('/carteira');
   };
 
